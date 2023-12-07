@@ -20,11 +20,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $gender = (bool) rand(0,1) ? 'male' : 'female';
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => fake()->firstName($gender),
+            'surname' => fake()->lastName($gender),
+            'email' => fake()->unique()->freeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'phone' => fake()->unique()->e164PhoneNumber(),
+            'birthdate' => fake()->dateTimeBetween('-70 years', '-18 years')->format('Y-m-d'),
+            'avatar' => fake()->imageUrl(width: 70, height: 70, format: 'jpg'),
+            'password' => Hash::make('test1234'),
             'remember_token' => Str::random(10),
         ];
     }
