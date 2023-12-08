@@ -11,5 +11,6 @@ return [
                 'height' => 70
             ],
         ],
+        'index' => ['count_rows' => 6],
     ],
 ];
