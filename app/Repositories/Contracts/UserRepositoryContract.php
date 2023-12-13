@@ -11,5 +11,7 @@ interface UserRepositoryContract
 {
     public function create(RegisterRequest $request): User|false;
 
-    public function get(Request $request): LengthAwarePaginator;
+    public function getAll(Request $request): LengthAwarePaginator;
+
+    public function getUser(Request $request): User;
 }

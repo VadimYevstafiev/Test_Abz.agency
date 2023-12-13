@@ -1,0 +1,99 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Simple REST API server",
+        "description": "This is a simple REST API server for a test assignment.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://http://localhost:{port}/{basePath}",
+            "description": "Local server",
+            "variables": {
+                "port": {
+                    "enum": ["80"],
+                    "default":"80"
+                },
+                "basePath": {
+                    "enum":["api/v.1.0.0"],
+                    "default": "api/v.1.0.0"
+                }
+            }
+        }
+    ],
+    "components": {
+        "schemas": {
+            "User": {
+                "properties": {
+                    "avatar": {
+                        "type": "string"
+                    },
+                    "namer": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "birthdate": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "paths":{
+        "/register": {
+            "post": {
+                "description": "Register new user",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "422":{
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/auth": {
+            "post": {
+                "description": "Authentication registered user",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "422":{
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "Get list of registered users",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Get data about user with id = {id}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id of the user about whom you want to get data"
+                }
+            ]
+        }
+    }
+}

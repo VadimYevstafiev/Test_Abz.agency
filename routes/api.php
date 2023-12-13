@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('{v1_0}')->name('v1.0.')->group(function() {
+    require __DIR__ . '/versions/v1_0.php';
+})->where('v1_0', 'v1\.0\..+');

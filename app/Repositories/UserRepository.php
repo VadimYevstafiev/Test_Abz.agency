@@ -44,7 +44,7 @@ class UserRepository implements UserRepositoryContract
         }
     }
 
-    public function get(Request $request): LengthAwarePaginator
+    public function getAll(Request $request): LengthAwarePaginator
     {
         $users = User::select('avatar', 'name', 'surname', 'birthdate')
             ->get()
@@ -63,6 +63,20 @@ class UserRepository implements UserRepositoryContract
             $page,
             ['path' => Paginator::resolveCurrentPath()]
         );
+    }
+
+    public function getUser(Request $request): User
+    {
+        $pathArray = explode('/', $request->getPathInfo());
+        $id = array_pop($pathArray);
+
+        $user = User::select('avatar', 'name', 'surname', 'birthdate')
+            ->firstWhere('id', $id);
+
+        if(!is_null($user->avatar)) {
+            $user->avatar = url($this->getAvatar($user->avatar));
+        }
+        return $user;
     }
 
     protected function getAvatar(string $file): string
