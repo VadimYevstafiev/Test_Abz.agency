@@ -25,16 +25,19 @@
         "schemas": {
             "User": {
                 "properties": {
-                    "avatar": {
-                        "type": "string"
-                    },
-                    "namer": {
+                    "name": {
                         "type": "string"
                     },
                     "surname": {
                         "type": "string"
                     },
                     "birthdate": {
+                        "type": "string"
+                    },
+                    "avatar": {
+                        "type": "string"
+                    },
+                    "visible properties": {
                         "type": "string"
                     }
                 }

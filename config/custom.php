@@ -12,5 +12,6 @@ return [
             ],
         ],
         'index' => ['count_rows' => 6],
+        'visible properties' => ['name', 'surname', 'birthdate', 'avatar', 'email']
     ],
 ];

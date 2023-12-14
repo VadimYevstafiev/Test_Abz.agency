@@ -46,7 +46,7 @@ class UserRepository implements UserRepositoryContract
 
     public function getAll(Request $request): LengthAwarePaginator
     {
-        $users = User::select('avatar', 'name', 'surname', 'birthdate')
+        $users = User::select(config('custom.user.visible properties'))
             ->get()
             ->each(function($item) {
                 if(!is_null($item->avatar)) {
@@ -70,7 +70,7 @@ class UserRepository implements UserRepositoryContract
         $pathArray = explode('/', $request->getPathInfo());
         $id = array_pop($pathArray);
 
-        $user = User::select('avatar', 'name', 'surname', 'birthdate')
+        $user = User::select(config('custom.user.visible properties'))
             ->firstWhere('id', $id);
 
         if(!is_null($user->avatar)) {
