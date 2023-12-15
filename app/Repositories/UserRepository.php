@@ -81,9 +81,14 @@ class UserRepository implements UserRepositoryContract
 
     protected function getAvatar(string $file): string
     {
-        if (!Storage::exists($file)) {
-            return $file;
+        $key = "users.avatar.{$file}";
+
+        if (!Cache::has($key)) {
+            $link = Storage::temporaryUrl($file, now()->addMinutes(10));
+            Cache::put($key, $link, 570);
+            return $link;
         }
-        return Storage::url($file);
+
+        return Cache::get($key);
     }
 }

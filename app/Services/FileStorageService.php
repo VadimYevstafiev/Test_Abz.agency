@@ -20,14 +20,15 @@ class FileStorageService implements FileStorageServiceContract
         $additionalPath = !empty($additionalPath) ? "{$additionalPath}/" : '';
 
         $filePath = "public/{$additionalPath}" . Str::random() . '_' . time() . '.' . static::getExtension();
-        Storage::put($filePath, $content, 'public');
+        Storage::disk('s3')->put($filePath, $content);
+        Storage::setVisibility($filePath, 'public');
 
         return $filePath;
     }
 
     public static function remove(string $file): void
     {
-        Storage::delete($file);
+        Storage::disk('s3')->delete($file); // ?
     }
 
     protected static function getContent(): string

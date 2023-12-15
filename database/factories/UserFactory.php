@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'phone' => fake()->unique()->e164PhoneNumber(),
             'birthdate' => fake()->dateTimeBetween('-70 years', '-18 years')->format('Y-m-d'),
-            'avatar' => fake()->imageUrl(width: 70, height: 70, format: 'jpg'),
+            'avatar' => 'public/users/avatars/VRbJ1KBHaKOZXrH0_1702680330.jpg',
             'password' => Hash::make('test1234'),
             'remember_token' => Str::random(10),
         ];
