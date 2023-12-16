@@ -11,10 +11,10 @@ use Illuminate\Support\Str;
 
 class AvatarStorageService extends FileStorageService
 {
-    protected static function getContent(): string
+    protected static function getContent(UploadedFile $file): array
     {
-        $path = self::$file->getRealPath();
-        $extension = self::$file->getClientOriginalExtension();
+        $path = $file->getRealPath();
+        $extension = $file->getClientOriginalExtension();
         $config = config('custom.user.avatar.file');
 
         \Tinify\setKey(env('TINIFY_API_KEY'));
@@ -36,11 +36,6 @@ class AvatarStorageService extends FileStorageService
         unlink($path);
         $resized->toFile($path);
 
-        return File::get($path);
+        return array(File::get($path), $extension);
     }
-
-    // protected static function getExtension(): string
-    // {
-    //     return config('custom.user.avatar.file.ext');
-    // }
 }

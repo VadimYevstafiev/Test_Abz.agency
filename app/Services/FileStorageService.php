@@ -10,16 +10,14 @@ use Illuminate\Support\Str;
 
 class FileStorageService implements FileStorageServiceContract
 {
-    protected static UploadedFile $file;
-
     public static function upload(UploadedFile $file, string $additionalPath = ''): string
     {
-        self::$file = $file;
-        $content = static::getContent();
+        list($content, $extension) = static::getContent($file);
 
         $additionalPath = !empty($additionalPath) ? "{$additionalPath}/" : '';
 
-        $filePath = "public/{$additionalPath}" . Str::random() . '_' . time() . '.' . static::getExtension();
+        $filePath = "public/{$additionalPath}" . Str::random() . '_' . time() . '.' . $extension;
+
         Storage::disk('s3')->put($filePath, $content);
         Storage::setVisibility($filePath, 'public');
 
@@ -31,13 +29,8 @@ class FileStorageService implements FileStorageServiceContract
         Storage::disk('s3')->delete($file); // ?
     }
 
-    protected static function getContent(): string
+    protected static function getContent(UploadedFile $file): array
     {
-        return File::get(self::$file);
-    }
-
-    protected static function getExtension(): string
-    {
-        return self::$file->getClientOriginalExtension();
+        return array(File::get($file), $file->getClientOriginalExtension());
     }
 }
